@@ -9,5 +9,6 @@
         public int DurationInMinutes { get; set; }
         public virtual ExamGroup ExamGroup { get; set; }
         public virtual ICollection<ExamStudent> ExamStudents { get; set; }
+        public virtual ICollection<Questions> Questions { get; set; }
     }
 }
