@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExamProject.Repository
 {
-    public class ExamRepository : GenericRepository<Exam>
+    public class ExamRepository : GenericRepository<Exam>,IExamRepository
     {
         private AppDbContext _context;
         public ExamRepository(AppDbContext appDbContext) : base(appDbContext)

@@ -1,8 +1,9 @@
-﻿using ExamProject.Models;
+﻿using ExamProject.Interfaces;
+using ExamProject.Models;
 
 namespace ExamProject.Repository
 {
-    public class StudentAsnwerRepository : GenericRepository<StudentAsnwers>
+    public class StudentAsnwerRepository : GenericRepository<StudentAsnwers>,IStudentAnswerRepository
     {
         private AppDbContext _appDbContext;
 

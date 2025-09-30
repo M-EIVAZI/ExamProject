@@ -1,9 +1,10 @@
-﻿using ExamProject.Models;
+﻿using ExamProject.Interfaces;
+using ExamProject.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamProject.Repository
 {
-    public class ExamStudentRepository : GenericRepository<ExamStudent>
+    public class ExamStudentRepository : GenericRepository<ExamStudent>,IExamStudentRepository
     {
         private AppDbContext _appDbContext;
         public ExamStudentRepository(AppDbContext appDbContext) : base(appDbContext)

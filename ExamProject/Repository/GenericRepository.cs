@@ -13,8 +13,9 @@ namespace ExamProject.Repository
             _appDbContext = appDbContext;
         }
 
-        public async Task<bool> Add(TEntity entity)
+        public async Task Add(TEntity entity)
         {
+
             await _appDbContext.Set<TEntity>().AddAsync(entity);
         }
 
