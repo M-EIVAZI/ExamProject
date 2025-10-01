@@ -1,0 +1,62 @@
+﻿@using ExamProject.ViewModels
+@model ExamStartViewModel
+@{
+    ViewData["Title"] = "شروع آزمون";
+}
+
+<h1 class="text-center">@Model.Title</h1>
+<p class="text-center">دانشجو: @Model.StudentId</p>
+<p class="text-center text-danger"> مهلت پاسخگویی تا: @Model.StartDate.AddMinutes(Model.DurationInMinutes).ToString("yyyy/MM/dd HH:mm:ss")</p>
+
+<hr />
+
+<form asp-controller="Exam" asp-action="SubmitExam" method="post">
+    
+    <input type="hidden" name="ExamId" value="@Model.ExamId" />
+    <input type="hidden" name="StudentId" value="@Model.StudentId" />
+
+    @foreach (var question in Model.Questions)
+    {
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light">
+                <strong>سوال @(Model.Questions.IndexOf(question) + 1):</strong> @question.Description
+            </div>
+            <div class="card-body">
+                
+                @* حلقه روی گزینه‌ها (گزینه ۱ تا ۴) *@
+                @for (byte i = 1; i <= 4; i++)
+                {
+                    // یک تابع کمکی ساده برای گرفتن متن گزینه
+                    var optionText = GetOptionText(question, i); 
+                    
+                    <div class="form-check p-2">
+                        <input class="form-check-input" type="radio" 
+                               name="Answers[@question.QuestionId]" @* کلید = آیدی سوال *@
+                               id="q_@question.QuestionId@i" value="@i" required> @* مقدار = شماره گزینه *@
+                        <label class="form-check-label" for="q_@question.QuestionId@i">
+                            **گزینه @i:** @optionText
+                        </label>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <div class="d-grid gap-2 my-5">
+        <button type="submit" class="btn btn-success btn-lg">ثبت نهایی آزمون و ارسال پاسخ‌ها</button>
+    </div>
+</form>
+
+@functions {
+    string GetOptionText(QuestionViewModel q, byte index)
+    {
+        return index switch
+        {
+            1 => q.Option1,
+            2 => q.Option2,
+            3 => q.Option3,
+            4 => q.Option4,
+            _ => ""
+        };
+    }
+}

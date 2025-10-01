@@ -7,16 +7,16 @@ namespace ExamProject.Services
 {
     public class TestServices : ITestService
     {
-        private ExamRepository _examRepository;
-        private ExamStudentRepository _examstudentRepository;
-        private StudentAsnwerRepository _studentAsnwerRepository;
+        private IExamRepository _examRepository;
+        private IExamStudentRepository _examstudentRepository;
+        private IStudentAnswerRepository _studentAsnwerRepository;
         private IUnitOfWork _unitOfWork;
 
-        public TestServices(ExamRepository examRepository, ExamStudentRepository examstudentRepository, StudentAsnwerRepository studentAsnwerRepository, IUnitOfWork unitOfWork)
+        public TestServices(IExamRepository examRepository, IExamStudentRepository examstudentRepository, IStudentAnswerRepository IstudentAsnwerRepository, IUnitOfWork unitOfWork)
         {
             _examRepository = examRepository;
             _examstudentRepository = examstudentRepository;
-            _studentAsnwerRepository = studentAsnwerRepository;
+            _studentAsnwerRepository = IstudentAsnwerRepository;
             _unitOfWork = unitOfWork;
         }
 

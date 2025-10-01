@@ -228,7 +228,7 @@ namespace ExamProject.Migrations
                     b.HasOne("ExamProject.Models.Student", "Student")
                         .WithMany("ExamStudents")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Exam");
@@ -269,7 +269,7 @@ namespace ExamProject.Migrations
                     b.HasOne("ExamProject.Models.Questions", "Question")
                         .WithMany("StudentAsnwers")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ExamProject.Models.Student", null)

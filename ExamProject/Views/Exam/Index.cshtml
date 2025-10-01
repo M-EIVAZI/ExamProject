@@ -1,0 +1,41 @@
+﻿@using ExamProject.ViewModels
+@model LoginViewModel
+@{
+    ViewData["Title"] = "شروع آزمون";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="text-center mb-4">ورود به آزمون</h2>
+        <div class="card p-4 shadow-sm">
+
+            <form asp-action="HandleLoginPost" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="ExamId"></label>
+                    <input asp-for="ExamId" class="form-control" />
+                    <span asp-validation-for="ExamId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="StudentId"></label>
+                    <input asp-for="StudentId" class="form-control" />
+                    <span asp-validation-for="StudentId" class="text-danger"></span>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg">شروع آزمون</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        // فعال کردن اعتبارسنجی سمت کلاینت
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -11,7 +11,7 @@ namespace ExamProject
             _appDbContext = appDbContext;
         }
 
-        public  async void SaveChangesAsync()
+        public  async Task SaveChangesAsync()
         {
             await _appDbContext.SaveChangesAsync();
         }

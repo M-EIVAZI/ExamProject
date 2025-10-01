@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExamProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250930152041_init")]
+    [Migration("20251001102248_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -231,7 +231,7 @@ namespace ExamProject.Migrations
                     b.HasOne("ExamProject.Models.Student", "Student")
                         .WithMany("ExamStudents")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Exam");
@@ -272,7 +272,7 @@ namespace ExamProject.Migrations
                     b.HasOne("ExamProject.Models.Questions", "Question")
                         .WithMany("StudentAsnwers")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ExamProject.Models.Student", null)

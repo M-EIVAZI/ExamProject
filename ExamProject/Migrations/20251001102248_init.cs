@@ -122,7 +122,7 @@ namespace ExamProject.Migrations
                         column: x => x.StudentId,
                         principalTable: "students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,7 +152,7 @@ namespace ExamProject.Migrations
                         column: x => x.QuestionId,
                         principalTable: "questions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_studentsAsnwers_students_StudentId",
                         column: x => x.StudentId,

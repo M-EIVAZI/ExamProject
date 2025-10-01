@@ -11,10 +11,12 @@ namespace ExamProject.Configurations
             builder.HasKey(x=>x.Id);
             builder.HasOne(x => x.Question)
                 .WithMany(x => x.StudentAsnwers)
-                .HasForeignKey(x => x.QuestionId);
+                .HasForeignKey(x => x.QuestionId)
+                .OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(x => x.ExamStudent)
                 .WithMany(x => x.StudentAsnwers)
-                .HasForeignKey(x => x.ExamStudentId);
+                .HasForeignKey(x => x.ExamStudentId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -1,13 +1,26 @@
 using ExamProject;
+using ExamProject.Interfaces;
+using ExamProject.Repository;
+using ExamProject.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IExamGroupRepository,ExamGroupRepository>();
+builder.Services.AddScoped<IExamRepository,ExamRepository>();
+builder.Services.AddScoped<IExamStudentRepository,ExamStudentRepository>();
+builder.Services.AddScoped<IQuestionRepository,QuestionRepository>();
+builder.Services.AddScoped<IStudentAnswerRepository,StudentAsnwerRepository>();
+builder.Services.AddScoped<IStudentRepository,StudentRepository>();
+builder.Services.AddScoped<ITestService, TestServices>();
+
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -28,6 +41,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Exam}/{action=Index}/{id?}");
 
 app.Run();
