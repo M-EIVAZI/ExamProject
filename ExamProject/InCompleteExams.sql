@@ -2,8 +2,8 @@ select
 	s.Name,
 	eg.GroupName,
 	e.Title ,
-	sum(case when sa.AnsweredAt<=DATEADD(MINUTE,e.DurationInMinutes,es.FinishedAt) then 1 else 0 end),
-	SUM(CASE WHEN sa.AnsweredAt > DATEADD(MINUTE, E.DurationInMinutes, es.FinishedAt) THEN 1 ELSE 0 END)
+	sum(case when sa.AnsweredAt<=DATEADD(MINUTE,e.DurationInMinutes,e.StartDate) then 1 else 0 end),
+	SUM(CASE WHEN sa.AnsweredAt > DATEADD(MINUTE, E.DurationInMinutes, e.StartDate) THEN 1 ELSE 0 END)
 
 	from examStudents as es
 	inner join studentsAsnwers as sa on es.Id=sa.ExamStudentId
@@ -12,5 +12,5 @@ select
 	inner join examGroups as eg on eg.Id=s.GroupId
 	group by s.Name,eg.GroupName,e.Title
 	having
-	sum(case when sa.AnsweredAt<=DATEADD(MINUTE,e.DurationInMinutes,es.FinishedAt) then 1 else 0 end)=
-    SUM(CASE WHEN sa.AnsweredAt > DATEADD(MINUTE, E.DurationInMinutes, es.FinishedAt) THEN 1 ELSE 0 END);
+	sum(case when sa.AnsweredAt<=DATEADD(MINUTE,e.DurationInMinutes,e.StartDate) then 1 else 0 end)=
+    SUM(CASE WHEN sa.AnsweredAt > DATEADD(MINUTE, E.DurationInMinutes, e.StartDate) THEN 1 ELSE 0 END);
