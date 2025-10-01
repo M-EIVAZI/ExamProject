@@ -14,7 +14,9 @@ namespace ExamProject.Repository
         public async Task<bool> IsCompletedAsync(int studentId, int examId)
         {
             var res = await _appDbContext.examStudents.FirstOrDefaultAsync(x => x.StudentId == studentId && x.ExamId == examId);
-            return res.IsCompleted;
+            if(res is not null)
+                return res.IsCompleted;
+            return false;
         }
 
     }

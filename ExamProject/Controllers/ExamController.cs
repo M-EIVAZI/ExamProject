@@ -24,6 +24,11 @@ namespace ExamProject.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult HandleLoginPost(LoginViewModel model)
         {
+            if (model.ExamId == 0 || model.StudentId == 0)
+            {
+                return View("Index", model);
+            }
+
             if (!ModelState.IsValid)
             {
                 return View("Index", model);
@@ -35,7 +40,7 @@ namespace ExamProject.Controllers
         [HttpGet("StartExam")]
         public async Task<IActionResult> StartExam(int testId, int studentId)
         {
-            if (await _testService.IsExamCompletedAsync(testId, studentId))
+            if (!await _testService.IsExamCompletedAsync(testId, studentId))
             {
                 return View("Error", "آزمون شما قبلاً ثبت نهایی شده است و امکان شرکت مجدد وجود ندارد.");
             }
@@ -54,13 +59,11 @@ namespace ExamProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitExam(ExamStudentViewModel model)
         {
-            // ۱. بررسی اعتبار مدل (مثلاً برای حداقل تعداد پاسخ)
             if (!ModelState.IsValid)
             {
                 return View("Error", "لطفاً تمامی سوالات را پاسخ دهید.");
             }
 
-            // ۲. بررسی نهایی دوباره برای تکرار (امنیت بیشتر)
             if (await _testService.IsExamCompletedAsync(model.ExamId, model.StudentId))
             {
                 return View("Error", "ثبت ناموفق: این آزمون قبلا ثبت شده است.");
@@ -68,15 +71,13 @@ namespace ExamProject.Controllers
 
             try
             {
-                // ۳. اجرای منطق سرویس (ثبت جزئیات پاسخ، بررسی زمان‌بندی و نهایی کردن آزمون)
                 await _testService.ProccessFinishedExamAsync(model);
 
-                // ۴. نمایش موفقیت
-                return View("Success", "آزمون شما با موفقیت ثبت نهایی شد.");
+                TempData["SuccessMessage"] = "آزمون شما با موفقیت ثبت نهایی شد.";
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                // مدیریت خطاهای دیتابیس یا سرویس
                 return View("Error", "خطا در پردازش آزمون: " + ex.Message);
             }
         }

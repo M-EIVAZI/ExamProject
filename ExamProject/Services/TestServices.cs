@@ -36,7 +36,7 @@ namespace ExamProject.Services
         }
         public async Task<ExamStartViewModel> GetExamWithQuestionsViewAsync(int examid, int studentid)
         {
-            var exam = await _examRepository.GetByIdAsync(examid);
+            var exam = await _examRepository.GetExamWithQuestions(examid);
 
             var viewModel = new ExamStartViewModel()
             {
